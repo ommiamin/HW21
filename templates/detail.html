@@ -1,0 +1,10 @@
+{%extends 'base.html'%}
+
+{%block title%} Detail    {%endblock%}
+
+{% block content %}
+    <a href="{% url 'delete' genre.id %}" class='btn btn-danger'>Delete</a>
+    <h3>{{ genre.name}}</h3>
+    <h1>{{ genre.description }}</h1>
+
+{% endblock%}
