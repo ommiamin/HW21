@@ -4,7 +4,10 @@
 
 {% block content %}
     <a href="{% url 'delete' genre.id %}" class='btn btn-danger'>Delete</a>
+    <a href="{% url 'update' genre.id %}" class='btn btn-info'>Update</a>
+
     <h3>{{ genre.name}}</h3>
     <h1>{{ genre.description }}</h1>
+    <h1>{{ genre.created }}</h1>
 
 {% endblock%}
