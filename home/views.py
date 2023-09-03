@@ -3,21 +3,36 @@ from django.http import HttpResponse
 from .models import Genre
 from django.contrib import messages
 from .forms import GenreCreateForm ,GenreUpdateForm
+from django.views import View
 # Create your views here.
 
 
-def home(request):
-    all = Genre.objects.all()
-    return render(request , 'home.html' , {'all': all})
 
-def detail(request , genre_id):
-    genre = Genre.objects.get(id=genre_id)
-    return render(request , 'detail.html', {'genre':genre})
+class HomeView(View):
 
-def delete(request ,genre_id):
-    Genre.objects.get(id=genre_id).delete()
-    messages.success(request ,"Genre deleted" , 'success')
-    return redirect('home')
+    def get(self, request):
+        all = Genre.objects.all()
+        return render(request , 'home/home.html' , {'all': all})
+
+    def post(self, request):
+        all = Genre.objects.all()
+        return render(request , 'home/home.html' , {'all': all})
+
+
+class DetailView(View ):
+    def get(self, request , genre_id):
+        genre = Genre.objects.get(id=genre_id)
+        return render(request , 'home/detail.html', {'genre':genre})       
+
+
+class DeleteView(View):
+    def get(self, request , genre_id):
+        Genre.objects.get(id=genre_id).delete()
+        messages.success(request ,"Genre deleted" , 'success')
+        return redirect('home:home')
+
+
+
 
 
 def create(request):
@@ -27,7 +42,7 @@ def create(request):
             cd = form.cleaned_data
             Genre.objects.create(name=cd['name'] , description = cd['description'] ,  created = cd['created'])
             messages.success(request , 'Genre created successfully')
-            return redirect('home')
+            return redirect('home:home')
     else:
         form = GenreCreateForm()
     return render(request, 'create.html', {'form': form})

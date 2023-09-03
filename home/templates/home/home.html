@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+
+{%block title%} Home    {%endblock%}
+
+{% block content %}
+    
+
+
+    {% if request.user.is_authenticated %}
+        <p>{{request.user}}  is online </p>
+    {% else %}
+        <p>{{request.user}} is not authenticated</p>
+    {% endif %}
+
+    <div class="card">
+        {% for genre in all %}
+        <a class="card-body" href="{% url 'home:details' genre.id %}" > {{genre.name}} </a></br>
+        {% endfor %}
+    </div>
+
+{% endblock%}
